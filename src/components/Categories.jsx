@@ -1,4 +1,4 @@
-function Categories({ value, onClickCategory }) {
+function Categories({ value, onChangeCategory }) {
   const categories = ['All', 'Meat', 'Vegetarian', 'Grill', 'Seafood', 'Sweet'];
   return (
     <div className="categories">
@@ -7,7 +7,7 @@ function Categories({ value, onClickCategory }) {
           return (
             <li
               key={index}
-              onClick={() => onClickCategory(index)}
+              onClick={() => onChangeCategory(index)}
               className={value === index ? 'active' : ''}>
               {categoryName}
             </li>
