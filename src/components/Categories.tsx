@@ -1,5 +1,11 @@
-function Categories({ value, onChangeCategory }) {
-  const categories = ['All', 'Meat', 'Vegetarian', 'Grill', 'Seafood', 'Sweet'];
+type CategoriesProps = {
+  value: number;
+  onChangeCategory: (i: number) => void;
+};
+const categories = ['All', 'Meat', 'Vegetarian', 'Grill', 'Seafood', 'Sweet'];
+
+
+const Categories: React.FC<CategoriesProps> = ({ value, onChangeCategory }) => {
   return (
     <div className="categories">
       <ul>
@@ -16,6 +22,6 @@ function Categories({ value, onChangeCategory }) {
       </ul>
     </div>
   );
-}
+};
 
 export default Categories;

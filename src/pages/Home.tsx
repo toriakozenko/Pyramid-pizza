@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ import {
 } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -28,8 +28,8 @@ export const Home = () => {
   const { items, status } = useSelector(selectPizzaData);
 
   const pizzas = items
-    ?.filter((obj) => obj.name && obj.name.toLowerCase().includes(searchValue.toLowerCase()))
-    ?.map((obj) => (
+    ?.filter((obj: any) => obj.name && obj.name.toLowerCase().includes(searchValue.toLowerCase()))
+    ?.map((obj: any) => (
       <Link key={obj.id} to={`/pizza/${obj.id}`}>
         <PizzaBlock {...obj} />
       </Link>
@@ -37,12 +37,12 @@ export const Home = () => {
 
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id));
   };
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const getPizzas = async () => {
@@ -52,6 +52,7 @@ export const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         currentPage,
         category,
@@ -106,7 +107,9 @@ export const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">All pizzas</h2>
-      {status === 'error' || items.length === 0 ? (
+      {status === 'loading' || items?.length === 0 ? (
+        skeletons
+      ) : status === 'error' ? (
         <div className="content__error-info">
           <h2>
             There was an error <span>😕</span>
@@ -114,7 +117,7 @@ export const Home = () => {
           <p>Unfortunately, we couldn't get pizza. Try again later.</p>
         </div>
       ) : (
-        <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+        <div className="content__items">{pizzas}</div>
       )}
 
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />

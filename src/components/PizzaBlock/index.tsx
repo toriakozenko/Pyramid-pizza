@@ -5,7 +5,16 @@ import ButtonAddToCart from '../ButtonAddToCart';
 
 const typeNames = ['thin', 'traditional'];
 
-function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
+type PizzaBlockProps = {
+  id: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, name, price, imageUrl, sizes, types }) => {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
   const cartItem = useSelector(selectCartItemById(id));
@@ -60,6 +69,6 @@ function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;

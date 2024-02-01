@@ -1,11 +1,15 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../redux/slices/cartSlice';
 
-const ButtonAddToCart = ({ count, item }) => {
+type ButtonAddToCartProps = {
+  count: number;
+  item: any;
+};
+
+const ButtonAddToCart: React.FC<ButtonAddToCartProps> = ({ count, item }) => {
   const dispatch = useDispatch();
 
-  const onClickAdd = (e) => {
+  const onClickAdd = (e: any) => {
     e.preventDefault();
     const itemToAdd = {
       id: item.id,
@@ -17,7 +21,7 @@ const ButtonAddToCart = ({ count, item }) => {
     };
     dispatch(addItem(itemToAdd));
   };
-  
+
   return (
     <button onClick={onClickAdd} className="button button--outline button--add">
       <svg

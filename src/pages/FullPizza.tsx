@@ -5,8 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ButtonAddToCart from '../components/ButtonAddToCart';
 import { selectCartItemById } from '../redux/slices/cartSlice';
 
-const FullPizza = () => {
-  const [pizza, setPizza] = useState();
+const FullPizza: React.FC = () => {
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    name: string;
+    price: number;
+    desc: string;
+  }>();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -28,7 +33,7 @@ const FullPizza = () => {
   }, []);
 
   if (!pizza) {
-    return 'Loading...';
+    return <>'Loading...'</>;
   }
 
   return (
