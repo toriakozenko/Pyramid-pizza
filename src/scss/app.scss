@@ -223,7 +223,6 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 13%;
 
       &-minus {
         svg {
@@ -235,6 +234,8 @@ body {
 
       b {
         font-size: 22px;
+        margin-right: 10px;
+        margin-left: 10px;
       }
     }
 
