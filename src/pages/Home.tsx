@@ -1,21 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import qs from 'qs';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import errorPage from '../assets/img/error-page.jpg';
 import Categories from '../components/Categories';
 import Pagination from '../components/Pagination';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
-import Sort, { sortList } from '../components/SortPopup';
-
-import {
-  selectFilter,
-  setCategoryId,
-  setCurrentPage,
-  setFilters,
-} from '../redux/slices/filterSlice';
-import { SearchPizzaParams, fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
+import SortPopup, { sortList } from '../components/SortPopup';
+import { selectFilter } from '../redux/filter/selector';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/filter/slice';
+import { fetchPizzas } from '../redux/pizza/asyncActions';
+import { selectPizzaData } from '../redux/pizza/selector';
+import { SearchPizzaParams } from '../redux/pizza/types';
 import { useAppDispatch } from '../redux/store';
 
 export const Home: React.FC = () => {
@@ -28,15 +26,16 @@ export const Home: React.FC = () => {
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
 
+
   const pizzas = items
     ?.filter((obj: any) => obj.name && obj.name.toLowerCase().includes(searchValue.toLowerCase()))
     ?.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, []);
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -106,23 +105,28 @@ export const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-        <Sort />
+        <SortPopup value={sort} />
       </div>
-      <h2 className="content__title">All pizzas</h2>
+      <h2 className="content__title">ffff</h2>
       {status === 'loading' || items?.length === 0 ? (
         skeletons
-      ) : status === 'error' ? (
+      ) : status === 'error' || items?.length === 0 ? (
         <div className="content__error-info">
           <h2>
             There was an error <span>😕</span>
           </h2>
           <p>Unfortunately, we couldn't get pizza. Try again later.</p>
         </div>
+      ) : pizzas?.length === 0 ? (
+        <div className="content__error-info">
+          <img src={errorPage} alt="error-page" />
+        </div>
       ) : (
-        <div className="content__items">{pizzas}</div>
+        <>
+          <div className="content__items">{pizzas}</div>
+          <Pagination currentPage={currentPage} onChangePage={onChangePage} />
+        </>
       )}
-
-      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
 };

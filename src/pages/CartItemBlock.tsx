@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import Counter from '../components/Counter/Counter';
-import { clearItem, removeItem } from '../redux/slices/cartSlice';
+import { clearItem, removeItem } from '../redux/cart/slice';
 
 type CartItemProps = {
   id: string;

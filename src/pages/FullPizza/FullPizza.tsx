@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import ButtonAddToCart from '../../components/ButtonAddToCart';
-import { selectCartItemById } from '../../redux/slices/cartSlice';
 import styles from './FullPizza.module.scss';
+import { selectCartItemById } from '../../redux/cart/selectors';
 
 const FullPizza: React.FC = () => {
   const [pizza, setPizza] = useState<{

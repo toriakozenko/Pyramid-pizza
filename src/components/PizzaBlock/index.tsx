@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { selectCartItemById } from '../../redux/slices/cartSlice';
-import { Pizza } from '../../redux/slices/pizzaSlice';
+
 import ButtonAddToCart from '../ButtonAddToCart';
+import { Pizza } from '../../redux/pizza/types';
+import { selectCartItemById } from '../../redux/cart/selectors';
 
 const typeNames = ['thin', 'traditional'];
 

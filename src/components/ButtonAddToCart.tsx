@@ -1,6 +1,8 @@
 import { useDispatch } from 'react-redux';
-import { CartItem, addItem } from '../redux/slices/cartSlice';
+
 import Counter from './Counter/Counter';
+import { CartItem } from '../redux/cart/types';
+import { addItem } from '../redux/cart/slice';
 
 type ButtonAddToCartProps = {
   count: number;
